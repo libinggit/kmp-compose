@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,6 +65,40 @@ fun CounterPageBy() {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             var counter by remember { mutableStateOf(0) }
+            log.printLogD(TAG, "目前值:${counter}")
+            Text("${counter}")
+
+            Button(onClick = {
+                counter++
+                log.printLogD(TAG, "增加到:${counter}")
+            }) {
+                Text("增加")
+            }
+
+            Button(onClick = {
+                counter--
+                log.printLogD(TAG, "减少到:${counter}")
+            }) {
+                Text("减少")
+            }
+        }
+
+    }
+}
+
+
+/**
+ * remember替换成rememberSaveable来保证Activity横竖屏变化也不会把初始化的值给覆盖掉。
+ */
+@Composable
+fun CounterPageByRememberSaveable () {
+    val TAG = "CounterPage"
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            var counter by rememberSaveable { mutableStateOf(0) }
             log.printLogD(TAG, "目前值:${counter}")
             Text("${counter}")
 
