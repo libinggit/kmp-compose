@@ -8,5 +8,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
 }
 repositories {
-    mavenCentral()
+    google()         // 用于 AndroidX 库
+    mavenCentral()   // 用于 Kotlin 和 Compose 多平台库
+    // JetBrains 仓库（部分 Compose 组件需要）
+    maven { url=uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+
 }

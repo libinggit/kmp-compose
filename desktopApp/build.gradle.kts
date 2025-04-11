@@ -22,6 +22,8 @@ dependencies {
     implementation(libs.desktop) // 或更高版本
     implementation(libs.ui) // 确保UI库的版本匹配
     implementation(libs.runtime)
+    implementation(libs.compose.material3)
+
 }
 //
 //application {

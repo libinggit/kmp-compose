@@ -2,7 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+//    kotlin("multiplatform") version "2.0.0"
+
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -19,20 +22,26 @@ kotlin {
 //        withJava()
     }
     
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach {
+//        it.binaries.framework {
+//            baseName = "shared"
+//            isStatic = true
+//        }
+//    }
 
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
+            implementation(libs.runtime)
+            implementation(libs.compose.foundation)
+            // 若需 Material Design 组件
+            implementation(libs.compose.material3)
+
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

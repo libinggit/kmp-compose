@@ -38,11 +38,11 @@ android {
 
 dependencies {
     implementation(projects.shared)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.ui)
     implementation(libs.compose.material3)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.activity.ktx)
     debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.activity.compose)
 
 
 }
