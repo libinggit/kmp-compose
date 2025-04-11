@@ -7,7 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -117,5 +119,26 @@ fun CounterPageByRememberSaveable () {
             }
         }
 
+    }
+}
+
+data class Hero(var name: String, var age: Int)
+
+@Composable
+fun HeroInfo() {
+    val heroList = remember {
+        mutableStateListOf(Hero(name = "安其拉", age = 18), Hero(name = "鲁班", age = 19))
+    }
+
+    Column {
+        Button(onClick = {
+            heroList[0]=Hero(name="DaJi", age = 22)
+        }) {
+            Text(text = "test click")
+        }
+
+        heroList.forEach {
+            Text(text = "student, name: ${it.name}, age: ${it.age} ")
+        }
     }
 }
