@@ -36,8 +36,9 @@ compose.desktop {
         nativeDistributions {
             targetFormats(org.jetbrains.compose.desktop.application.dsl.TargetFormat.Exe,
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
-                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb,
-                org.jetbrains.compose.desktop.application.dsl.TargetFormat.AppImage)
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+//                , org.jetbrains.compose.desktop.application.dsl.TargetFormat.AppImage
+            )
             packageName = "MyApp"
             packageVersion = "1.0.1"
 
@@ -45,10 +46,10 @@ compose.desktop {
                 iconFile.set(project.file("src/main/resources/icon.ico"))
             }
             macOS {
-                iconFile.set(project.file("src/main/resources/icon.icns"))
+                iconFile.set(project.file("src/main/resources/icon.ico"))
             }
             linux {
-                iconFile.set(project.file("src/main/resources/icon.png"))
+                iconFile.set(project.file("src/main/resources/icon.ico"))
             }
         }
     }
