@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Locale
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -7,6 +8,16 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
 }
+
+val osName = System.getProperty("os.name").lowercase(Locale.getDefault())
+val platform = when {
+    osName.contains("win") -> "win"
+    osName.contains("mac") -> "mac"
+    osName.contains("nux") -> "linux"
+    else -> throw GradleException("Unknown OS: $osName")
+}
+val javafxVersion = "21"
+
 
 kotlin {
     androidTarget {
@@ -50,6 +61,10 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 implementation(libs.desktop)  // Compose for Desktop
+                implementation("org.openjfx:javafx-base:$javafxVersion:$platform")
+                implementation("org.openjfx:javafx-graphics:$javafxVersion:$platform")
+                implementation("org.openjfx:javafx-media:$javafxVersion:$platform")
+                implementation("org.openjfx:javafx-swing:$javafxVersion:$platform")
             }
         }
 

@@ -17,6 +17,9 @@ class PlayerController(private val scope: CoroutineScope = CoroutineScope(Dispat
      */
     private val audioPlayer = getAudioPlayer()
 
+    /**
+     * MutableStateFlow 可读可写。asStateFlow转换成的StateFlow只可读，防止权限泛滥。
+     */
     private val _playlist = MutableStateFlow<PlayList?>(null)
     val playList:StateFlow<PlayList?> =_playlist.asStateFlow()
 

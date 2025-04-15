@@ -17,9 +17,9 @@ fun main() = application {
     val playlist = PlayList(
         name = "本地音乐",
         tracks = listOf(
-            Track("1", "青花瓷", "周杰伦", "file:///path/to/song1.mp3", 200_000),
-            Track("2", "无所谓", "杨坤", "file:///path/to/song2.mp3", 180_000),
-            Track("3", "童话", "光良", "file:///path/to/song3.mp3", 240_000)
+            Track("1", "青花瓷", "周杰伦", "D:/Aria.mp3", 200_000),
+            Track("2", "无所谓", "杨坤", "D:/Aria.mp3", 180_000),
+            Track("3", "童话", "光良", "D:/Aria.mp3", 240_000)
         )
     )
     val controller = remember { PlayerController() }
