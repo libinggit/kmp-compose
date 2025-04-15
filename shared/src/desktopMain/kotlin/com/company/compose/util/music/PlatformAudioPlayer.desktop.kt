@@ -22,11 +22,16 @@ class DesktopPlatformAudioPlayer:AudioPlayer {
     override fun play(track: Track) {
         log.printLogD(TAG,"play")
         stop()
-        val media = if(track.url.startsWith("http")){
-            Media(track.url)
-        }else{
-            val file = File(track.url)
-            Media(file.toURI().toString())
+        val media = try {
+            if(track.url.startsWith("http")){
+                Media(track.url)
+            }else{
+                val file = File(track.url)
+                Media(file.toURI().toString())
+            }
+        }catch (e:Exception){
+            log.printLogE(TAG,"播放异常",e)
+            return
         }
         mediaPlayer = MediaPlayer(media)
         mediaPlayer?.play()

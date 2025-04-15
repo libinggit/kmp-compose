@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.company.compose.util.music.PlayerController
 
 @Composable
-fun PlayerView(){
+fun PlayView(){
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
