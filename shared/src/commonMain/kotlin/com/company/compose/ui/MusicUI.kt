@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -16,6 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.company.compose.util.music.PlayerController
@@ -56,21 +59,21 @@ fun PlayListView(controller: PlayerController){
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column (modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "播放列表:${playList?.name?:"列表为空"}", fontSize = 20.sp)
+        Column (modifier = Modifier.padding(16.dp).fillMaxWidth()){
+            Text(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally), text = "播放列表:${playList?.name?:"列表为空"}", fontSize = 20.sp, style = TextStyle(textAlign = TextAlign.Center))
 
             Spacer(modifier = Modifier.height(8.dp))
             playList?.tracks?.forEachIndexed { index, track ->
                 val isPlaying =track==currentTrack
-                Row {
-                    Button(onClick = {
+                Row (modifier = Modifier.align(Alignment.Start), verticalAlignment = Alignment.CenterVertically){
+                    Button(modifier = Modifier.padding(start = 8.dp),onClick = {
                         controller.play(index)
                     }){
                         Text(text = "${track.title}-${track.artist}")
                     }
 
                     if(isPlaying){
-                        Text("正在播放", modifier = Modifier.padding(start = 8.dp))
+                        Text( text = "正在播放", modifier = Modifier.padding(start = 8.dp))
                     }
                 }
             }
