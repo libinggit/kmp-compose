@@ -72,7 +72,17 @@ fun VideoListPage(
                 title = {
                     Column {
                         Text(text = website.name, style = MaterialTheme.typography.headlineSmall)
-                        Text(text = website.url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                        Text(text = website.url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.clickable {
+                            println("点击网页链接: ${website.url}")
+                            // 示例：用默认浏览器打开链接 (Windows Desktop)
+                            if (Desktop.isDesktopSupported()) {
+                                try {
+                                    Desktop.getDesktop().browse(URI(website.url))
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        })
                     }
                 },
                 actions = {

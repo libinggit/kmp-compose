@@ -4,8 +4,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WebsiteManagerUI(onNavigateToVideoSearch: (() -> Unit )?=null) {
+fun WebsiteManagerUI(onNavigateToVideoSearch: (() -> Unit )?=null,onNavigateToVideoList: ((Website) -> Unit)? = null) {
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var url by remember { mutableStateOf(TextFieldValue("")) }
     var websites by remember { mutableStateOf(listOf<Website>()) }
@@ -148,9 +150,11 @@ fun WebsiteManagerUI(onNavigateToVideoSearch: (() -> Unit )?=null) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            verticalAlignment = Alignment.CenterVertically // 垂直居中对齐
                         ) {
-                            Column {
+                            Column(
+                                modifier = Modifier.weight(1f) // 占据剩余空间，推挤按钮到最右
+                            ) {
                                 Text(website.name, style = MaterialTheme.typography.titleMedium)
                                 Spacer(Modifier.height(4.dp))
                                 Text(
@@ -159,18 +163,34 @@ fun WebsiteManagerUI(onNavigateToVideoSearch: (() -> Unit )?=null) {
                                     color = MaterialTheme.colorScheme.primary
                                 )
                             }
-                            IconButton(onClick = {
-                                scope.launch {
-                                    // 调用删除方法
-                                    SqlDelightDatabase.deleteWebsiteById(website.id)
+
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        onNavigateToVideoList?.invoke(website)
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = "搜索"
+                                    )
                                 }
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "删除"
-                                )
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        SqlDelightDatabase.deleteWebsiteById(website.id)
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "删除"
+                                    )
+                                }
                             }
                         }
+
                     }
                 }
             }

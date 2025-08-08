@@ -12,23 +12,28 @@ import com.company.compose.ui.VideoListPage
 @Composable
 fun AppRouter() {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.WebsiteManager) }
-
+    var lastScreen: Screen? = Screen.WebsiteManager
     when (val screen = currentScreen)  {
         is Screen.WebsiteManager -> WebsiteManagerUI(
-            onNavigateToVideoSearch = { currentScreen = Screen.VideoSearchPage }
+            onNavigateToVideoSearch = { currentScreen = Screen.VideoSearchPage },
+            onNavigateToVideoList = { website ->
+                currentScreen = Screen.VideoListPage(website)
+                lastScreen = currentScreen
+            },
         )
 
         is Screen.VideoSearchPage -> VideoSearchUI(
-            onNavigateBack = { currentScreen = Screen.WebsiteManager },
+            onNavigateBack = { currentScreen = lastScreen!! },
             onNavigateToVideoList = { website ->
                 currentScreen = Screen.VideoListPage(website)
+                lastScreen = currentScreen
             },
         )
 
         is Screen.VideoListPage -> VideoListPage(
             website = screen.website,
             onNavigateBack = {
-                currentScreen = Screen.VideoSearchPage
+                currentScreen = lastScreen!!
             }
         )
 
