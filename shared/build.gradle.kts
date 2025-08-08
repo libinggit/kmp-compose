@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
     id("com.squareup.sqldelight") // 这里不写 version，也不写 apply false
+    kotlin("plugin.serialization") version "1.9.0"
+
 }
 sqldelight {
     database("WebsiteDatabase") {
@@ -61,7 +63,14 @@ kotlin {
             implementation(libs.sqlite.driver) // sqlite 驱动
             implementation(libs.sqldelight.runtime)       // core runtime
             implementation(libs.coroutines.extensions) // flow 支持
+            // Ktor 客户端核心库
+            implementation("io.ktor:ktor-client-core:2.3.3")
+            implementation("io.ktor:ktor-client-content-negotiation:2.3.3")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
+            implementation("io.ktor:ktor-client-cio:2.3.4")        // CIO 引擎依赖
 
+            // jsoup (跨平台) 解析html，如果想用更严谨的html解析器，推荐这个
+            implementation("org.jsoup:jsoup:1.16.1")
 
         }
         commonTest.dependencies {
@@ -75,12 +84,17 @@ kotlin {
                 implementation("org.openjfx:javafx-graphics:$javafxVersion:$platform")
                 implementation("org.openjfx:javafx-media:$javafxVersion:$platform")
                 implementation("org.openjfx:javafx-swing:$javafxVersion:$platform")
+                implementation("io.ktor:ktor-client-cio:2.3.3")  // Desktop 网络引擎
+
             }
         }
 
         val androidMain by getting {
             dependencies {
                 implementation("com.squareup.sqldelight:android-driver:1.5.5")
+                implementation("io.ktor:ktor-client-okhttp:2.3.3") // Android 网络引擎
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
             }
         }
 
