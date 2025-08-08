@@ -20,7 +20,7 @@ object SqlDelightDatabase {
         database = WebsiteDatabase(driver)
     }
 
-    suspend fun insertWebsite(name: String, url: String) {
+    fun insertWebsite(name: String, url: String) {
         database.websiteQueries.transaction {
             database.websiteQueries.insertWebsite(UUID.randomUUID().toString(), name, url)
         }

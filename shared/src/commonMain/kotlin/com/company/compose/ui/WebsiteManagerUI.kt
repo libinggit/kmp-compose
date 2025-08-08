@@ -2,6 +2,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WebsiteManagerUI() {
+fun WebsiteManagerUI(onNavigateToVideoSearch: (() -> Unit )?=null) {
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var url by remember { mutableStateOf(TextFieldValue("")) }
     var websites by remember { mutableStateOf(listOf<Website>()) }
@@ -27,11 +28,25 @@ fun WebsiteManagerUI() {
     // 监听数据库中的所有网站数据，自动更新 UI
     LaunchedEffect(Unit) {
         SqlDelightDatabase.allWebsites.collectLatest { list ->
+            println("数据库变更，数据刷新: ${list.size} 条")
+
             websites = list
         }
     }
 
     Scaffold(
+        topBar = {
+            SmallTopAppBar(
+                title = { Text("网站管理") },
+                actions = {
+                    TextButton(
+                        onClick = { onNavigateToVideoSearch?.invoke() }
+                    ) {
+                        Text("视频搜索")
+                    }
+                }
+            )
+        },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -53,14 +68,35 @@ fun WebsiteManagerUI() {
                 onValueChange = { name = it },
                 label = { Text("网站名称") },
                 placeholder = { Text("请输入网站名称") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                trailingIcon = {
+                    if (name.text.isNotEmpty()) {
+                        IconButton(onClick = { name = TextFieldValue("") }) {
+                            Icon(
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = "清空名称"
+                            )
+                        }
+                    }
+                }
+
             )
             OutlinedTextField(
                 value = url,
                 onValueChange = { url = it },
                 label = { Text("网站地址") },
                 placeholder = { Text("请输入网站地址，例如 https://example.com") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                trailingIcon = {
+                    if (url.text.isNotEmpty()) {
+                        IconButton(onClick = { url = TextFieldValue("") }) {
+                            Icon(
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = "清空地址"
+                            )
+                        }
+                    }
+                }
             )
 
             Button(
@@ -74,6 +110,7 @@ fun WebsiteManagerUI() {
                             // 清空输入框
                             name = TextFieldValue("")
                             url = TextFieldValue("")
+//                            onNavigateToVideoSearch?.invoke()
                         }
                     } else {
                         scope.launch {
@@ -132,6 +169,89 @@ fun WebsiteManagerUI() {
                                     imageVector = Icons.Default.Delete,
                                     contentDescription = "删除"
                                 )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 视频搜索页面
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun VideoSearchUI(onNavigateBack: (() -> Unit)? = null,onNavigateToVideoList: ((Website) -> Unit)? = null) {
+    var websites by remember { mutableStateOf(listOf<Website>()) }
+    val scope = rememberCoroutineScope()
+
+    // 监听数据库变化
+    LaunchedEffect(Unit) {
+        SqlDelightDatabase.allWebsites.collectLatest { list ->
+            websites = list
+        }
+    }
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            SmallTopAppBar(
+                title = { Text("搜索视频") },
+                actions = {
+                    if (onNavigateBack != null) {
+                        TextButton(onClick = { onNavigateBack() }) {
+                            Text("返回")
+                        }
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .padding(paddingValues)
+        ) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(websites, key = { it.id }) { website ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = MaterialTheme.shapes.medium,
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text(
+                                    text = website.name,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Spacer(Modifier.height(4.dp))
+                                Text(
+                                    text = website.url,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Button(
+                                onClick = {
+                                    scope.launch {
+                                        println("搜索视频：${website.url}")
+                                        onNavigateToVideoList?.invoke(website)
+                                    }
+                                }
+                            ) {
+                                Text("搜索")
                             }
                         }
                     }

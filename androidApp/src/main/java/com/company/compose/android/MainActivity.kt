@@ -1,6 +1,5 @@
 package com.company.compose.android
 
-import WebsiteManagerUI
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.compose.db.DatabaseDriverFactory
 import com.company.compose.db.SqlDelightDatabase
-import com.company.compose.ui.CounterPage
+import com.company.compose.router.AppRouter
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +16,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MyApplicationTheme {
-                WebsiteManagerUI()
+                AppRouter()
             }
         }
     }
@@ -27,6 +26,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        WebsiteManagerUI()
+        AppRouter()
     }
 }
