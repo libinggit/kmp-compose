@@ -1,0 +1,14 @@
+CREATE TABLE website (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    url TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM website;
+
+insertWebsite:
+INSERT INTO website(id, name, url) VALUES (?, ?, ?);
+
+deleteById:
+DELETE FROM website WHERE id = ?;

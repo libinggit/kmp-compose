@@ -1,16 +1,20 @@
 [versions]
 agp = "8.3.0"
+coroutinesExtensions = "1.5.5"
 kotlin = "2.0.0"
 compose = "1.6.10"
 activityKtx = "1.10.1"
 
 [libraries]
+coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 desktop = { module = "org.jetbrains.compose.desktop:desktop", version.ref = "compose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose" }
 runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
+sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "coroutinesExtensions" }
+sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "coroutinesExtensions" }
 ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 activity-compose = { module = "androidx.activity:activity-compose", version = "1.10.1" }

@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.compose.compiler).apply(false)
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    id("com.squareup.sqldelight") version "1.5.5" apply false
+
 }
 repositories {
     google()         // 用于 AndroidX 库

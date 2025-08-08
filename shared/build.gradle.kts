@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Locale
 
@@ -7,8 +8,14 @@ plugins {
 
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
+    id("com.squareup.sqldelight") // 这里不写 version，也不写 apply false
 }
-
+sqldelight {
+    database("WebsiteDatabase") {
+        packageName = "com.company.compose.data"
+        sourceFolders = listOf("sqldelight")
+    }
+}
 val osName = System.getProperty("os.name").lowercase(Locale.getDefault())
 val platform = when {
     osName.contains("win") -> "win"
@@ -51,6 +58,9 @@ kotlin {
             implementation(libs.compose.foundation)
             // 若需 Material Design 组件
             implementation(libs.compose.material3)
+            implementation(libs.sqlite.driver) // sqlite 驱动
+            implementation(libs.sqldelight.runtime)       // core runtime
+            implementation(libs.coroutines.extensions) // flow 支持
 
 
         }
@@ -65,6 +75,12 @@ kotlin {
                 implementation("org.openjfx:javafx-graphics:$javafxVersion:$platform")
                 implementation("org.openjfx:javafx-media:$javafxVersion:$platform")
                 implementation("org.openjfx:javafx-swing:$javafxVersion:$platform")
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation("com.squareup.sqldelight:android-driver:1.5.5")
             }
         }
 
