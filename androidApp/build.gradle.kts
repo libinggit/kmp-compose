@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.6.1")
+        classpath("com.android.tools.build:gradle:8.10.1")
     }
 }
 
@@ -23,8 +23,9 @@ android {
         versionName = "1.0"
     }
     buildFeatures {
-        buildFeatures { compose = true }
+        compose = true
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -58,9 +59,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.activity.compose)
-    debugImplementation("androidx.compose.ui:ui-tooling-preview:1.9.0")
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.activity.compose)
+    implementation("androidx.compose.ui:ui-tooling-preview:1.9.0")
 
 
 }
