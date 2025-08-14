@@ -1,7 +1,15 @@
+buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.6.1")
+    }
+}
+
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    id ("com.dz.bitmap.plugin")
 }
 
 android {
@@ -15,7 +23,7 @@ android {
         versionName = "1.0"
     }
     buildFeatures {
-        compose = true
+        buildFeatures { compose = true }
     }
     packaging {
         resources {
@@ -28,12 +36,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.6.10"
+    }
+
 }
 
 dependencies {
@@ -41,8 +54,13 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.compose.material3)
     implementation(libs.activity.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.activity.compose)
+    debugImplementation("androidx.compose.ui:ui-tooling-preview:1.9.0")
 
 
 }

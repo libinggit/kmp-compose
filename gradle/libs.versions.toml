@@ -1,9 +1,13 @@
 [versions]
-agp = "8.3.0"
+agp = "8.6.1"
 coroutinesExtensions = "1.5.5"
 kotlin = "2.0.0"
 compose = "1.6.10"
 activityKtx = "1.10.1"
+appcompat = "1.7.1"
+material = "1.12.0"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
 
 [libraries]
 coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
@@ -18,6 +22,10 @@ sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref 
 ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 activity-compose = { module = "androidx.activity:activity-compose", version = "1.10.1" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 
 [plugins]

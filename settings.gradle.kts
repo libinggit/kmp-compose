@@ -21,3 +21,4 @@ rootProject.name = "compose"
 include(":androidApp")
 include(":shared")
 include(":desktopApp")
+includeBuild ("bitmap_plugin")

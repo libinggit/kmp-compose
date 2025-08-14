@@ -1,0 +1,40 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'groovy'
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+    google()
+    gradlePluginPortal()
+}
+
+
+// 插件的配置，定义插件 ID 和实现类
+// 这里的 implementationClass 指向你的 Kotlin 插件类
+// 注意：这个部分也可以写成单独的 .properties 文件
+gradlePlugin {
+    plugins {
+        create('bitmap-instrumentation') {
+            id = 'com.dz.bitmap.plugin'
+            implementationClass = 'com.dz.plugin.bitmaptracker.BitmapInstrumentationPlugin'
+        }
+    }
+}
+
+dependencies {
+    // 依赖 AGP
+    implementation("com.android.tools.build:gradle:8.3.1") // 根据你项目 AGP 版本调整
+    // 关键：这行是引用 DefaultTask 的核心
+    implementation gradleApi()
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
+
+    // 引入 Kotlin 标准库
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.0"
+
+    // 如果需要字节码操作，请引入 ASM
+    implementation 'org.ow2.asm:asm:9.7.1'
+    implementation "org.ow2.asm:asm-commons:9.7.1"
+
+}
