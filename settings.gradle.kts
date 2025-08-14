@@ -17,7 +17,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "compose"
+rootProject.name = "kmp-compose"
 include(":androidApp")
 include(":shared")
 include(":desktopApp")
