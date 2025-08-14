@@ -31,7 +31,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
 
     // 引入 Kotlin 标准库
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
 
     // 如果需要字节码操作，请引入 ASM
     implementation 'org.ow2.asm:asm:9.7.1'

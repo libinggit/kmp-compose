@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.10.1")
+        classpath(libs.gradle)
     }
 }
 
@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.compose.ui.tooling)
     implementation(libs.activity.compose)
-    implementation("androidx.compose.ui:ui-tooling-preview:1.9.0")
+    implementation(libs.ui.tooling.preview)
 
 
 }
